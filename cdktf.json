@@ -1,0 +1,17 @@
+{
+  "language": "go",
+  "app": "go run main.go",
+  "codeMakerOutput": "generated",
+  "projectId": "f57f3a3f-56c4-4aef-884b-58088886e65c",
+  "sendCrashReports": "false",
+  "terraformProviders": [
+    "hashicorp/azurerm@~>3"
+  ],
+  "terraformModules": [
+    {
+      "name": "naming",
+      "source": "Azure/naming/azurerm"
+    }
+  ],
+  "context": {}
+}
