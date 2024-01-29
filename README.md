@@ -1,3 +1,5 @@
+> Example code to reproduce the issue described in https://github.com/hashicorp/terraform-cdk/issues/3477
+
 ## Summary
 
 This demonstrates an issue with the creation of the `cdktf` bindings for the `"Azure/naming/azurerm"` module (https://github.com/Azure/terraform-azurerm-naming). The root of the issue is that the language specific functions generated for this module yields a token that references a key->value map type, and not the actual output (string) value.
