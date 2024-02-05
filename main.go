@@ -31,12 +31,30 @@ func NewNamingRenderingFailureStack(scope constructs.Construct, id string) cdktf
 	// 		"location": "Canada Central",
 	// 		"name": "${module.resourceNaming.resource_group}"
 	// ... which is invalid because the name is not a string literal, we need to access the map key as such
-	// 		"name": "${module.resourceNaming.resource_group.name[\"name\"]}"
+	// 		"name": "${module.resourceNaming.resource_group.name}"
 	resourcegroup.NewResourceGroup(stack, jsii.String("resource_group"), &resourcegroup.ResourceGroupConfig{
 		Name:     n.ResourceGroupOutput(), // ResourceGroupOutput returns a string instead of a Map object.
 		Location: jsii.String("Canada Central"),
 	})
 
+	// See comment at https://github.com/hashicorp/terraform-cdk/issues/3477#issuecomment-1926338050
+	//  Fn_Lookup states: retrieves the value of a single element from a map, given its key. If the given key does not exist,
+	//					   the given default value is returned instead.
+	// Using the following will generate the correct cdk.tf.json output. For example... Notice the name field is now referenced correctly.
+	// "resource_group_workaround": {
+	// 	"//": {
+	// 	"metadata": {
+	// 		"path": "naming-output-failure-example/resource_group_workaround",
+	// 		"uniqueId": "resource_group_workaround"
+	// 	}
+	// 	},
+	// 	"location": "Canada Central",
+	// 	"name": "${module.resourceNaming.resource_group.name}"
+	// }
+	resourcegroup.NewResourceGroup(stack, jsii.String("resource_group_workaround"), &resourcegroup.ResourceGroupConfig{
+		Name:     cdktf.Token_AsString(cdktf.Fn_Lookup(n.ResourceGroupOutput(), jsii.String("name"), nil), nil),
+		Location: jsii.String("Canada Central"),
+	})
 	return stack
 }
 
