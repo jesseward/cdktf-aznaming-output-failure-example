@@ -1,5 +1,5 @@
-> 2024-02-05 - Workaround using `cdktf.Fn_Lookup(..`) example added.
-> Example code to reproduce the issue described in https://github.com/hashicorp/terraform-cdk/issues/3477
+> * 2024-02-05 - Workaround using `cdktf.Fn_Lookup(..`) example added.
+> * Example code to reproduce the issue described in https://github.com/hashicorp/terraform-cdk/issues/3477
 
 ## Summary
 
